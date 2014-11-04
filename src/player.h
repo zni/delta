@@ -4,6 +4,7 @@
 #include <map>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 #include "bullet.h"

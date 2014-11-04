@@ -13,6 +13,7 @@ Player::Player(const std::string &image, Bullets *bullets) :
         std::cerr << "Unable to load player texture: " << image << std::endl;
     } else {
         m_playerSprite.setTexture(m_shipTexture);
+        m_playerSprite.setOrigin(12, 16);
     }
 
     // Initialize keymap
