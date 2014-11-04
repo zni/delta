@@ -1,12 +1,13 @@
 #include <iostream>
 #include "player.h"
 
-#define SPEED 2
+#define SPEED 4
 
-Player::Player(const std::string &image) :
+Player::Player(const std::string &image, Bullets *bullets) :
     m_playerSprite(),
     m_shipTexture(),
-    m_keymap()
+    m_keymap(),
+    m_bullets(bullets)
 {
     if (!m_shipTexture.loadFromFile(image)) {
         std::cerr << "Unable to load player texture: " << image << std::endl;
@@ -19,6 +20,7 @@ Player::Player(const std::string &image) :
     m_keymap[sf::Keyboard::S] = false;
     m_keymap[sf::Keyboard::A] = false;
     m_keymap[sf::Keyboard::D] = false;
+    m_keymap[sf::Keyboard::Space] = false;
 }
 
 Player::~Player() { }
@@ -75,5 +77,9 @@ void Player::updateMovement()
     }
     if (m_keymap[sf::Keyboard::D]) {
         this->move(SPEED, 0);
+    }
+    if (m_keymap[sf::Keyboard::Space]) {
+        m_bullets->fire(m_playerSprite.getPosition());
+        // m_keymap[sf::Keyboard::Space] = false;
     }
 }
