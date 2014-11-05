@@ -4,11 +4,14 @@
 #include <SFML/System/Time.hpp>
 
 #include "player.h"
+#include "bullet.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(400, 600), "delta");
-    Player player("/home/mgodshall/hacking/c++/delta/assets/raiden_ship.png");
+
+    Bullets bullets;
+    Player player("/home/mgodshall/hacking/c++/delta/assets/raiden_ship.png", &bullets);
     player.setPosition(200, 500);
     window.setKeyRepeatEnabled(false);
 
@@ -28,6 +31,7 @@ int main()
             player.updateMovement();
 
             window.clear();
+            bullets.renderBullets(window);
             window.draw(player.sprite());
             window.display();
             clock.restart();
