@@ -2,7 +2,7 @@
 #include "bullet.h"
 
 #define NUM_BULLETS 100
-#define SPEED -10
+#define SPEED -20
 
 Bullets::Bullets() :
     m_bulletSheet(),
@@ -11,7 +11,7 @@ Bullets::Bullets() :
     if (!m_bulletSheet.loadFromFile("/home/mgodshall/hacking/c++/delta/assets/player_bullets.png")) {
         std::cerr << "Unable to load bullet texture sheet." << std::endl;
     } else {
-        sf::IntRect rect(0, 0, 12, 13);
+        sf::IntRect rect(24, 0, 12, 13);
         for (int i = 0; i < NUM_BULLETS; i++) {
             m_bullets[i] = new Bullet;
             m_bullets[i]->sprite.setTexture(m_bulletSheet);
@@ -32,8 +32,6 @@ void Bullets::fire(const sf::Vector2f &origin)
 {
     for (Bullet *bullet : m_bullets) {
         if (bullet->state == fired) {
-            // XXX
-            bullet->sprite.move(0, SPEED);
             continue;
         } else {
             bullet->state = fired;
@@ -46,16 +44,21 @@ void Bullets::fire(const sf::Vector2f &origin)
 void Bullets::renderBullets(sf::RenderWindow &window)
 {
     for (Bullet *bullet : m_bullets) {
-        sf::Vector2f pos = bullet->sprite.getPosition();
+        if (bullet->state != dead) {
+            window.draw(bullet->sprite);
+        }
+    }
+}
 
-        if (pos.y < 0) {
-            bullet->sprite.setPosition(0, 0);
+void Bullets::updateBullets()
+{
+    for (Bullet *bullet : m_bullets) {
+        if ((bullet->sprite.getPosition()).y < 0) {
             bullet->state = dead;
         }
 
         if (bullet->state != dead) {
             bullet->sprite.move(0, SPEED);
-            window.draw(bullet->sprite);
         }
     }
 }

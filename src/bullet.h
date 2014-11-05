@@ -23,6 +23,7 @@ class Bullets {
 
         void fire(const sf::Vector2f &origin);
         void renderBullets(sf::RenderWindow &window);
+        void updateBullets();
 
     private:
         sf::Texture m_bulletSheet;

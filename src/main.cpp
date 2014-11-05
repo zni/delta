@@ -27,13 +27,17 @@ int main()
                 player.handleKeyPress(event.key.code, false);
         }
 
-        if (clock.getElapsedTime().asMilliseconds() > 1) {
+        if (clock.getElapsedTime().asMilliseconds() >= 16) {
+            // Update
             player.updateMovement();
+            bullets.updateBullets();
 
+            // Render
             window.clear();
             bullets.renderBullets(window);
             window.draw(player.sprite());
             window.display();
+
             clock.restart();
         }
     }
