@@ -25,6 +25,7 @@ Bullets::~Bullets()
 {
     for (Bullet *bullet : m_bullets) {
         delete bullet;
+        bullet = NULL;
     }
 }
 
