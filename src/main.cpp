@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "player.h"
-#include "bullet.h"
+#include "bullets.h"
 #include "enemies.h"
 
 int main()
@@ -32,6 +32,8 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyPressed) {
+
+                // FIXME
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 } else {
@@ -44,12 +46,14 @@ int main()
 
         if (clock.getElapsedTime().asMilliseconds() >= 16) {
             spawnTime += clock.getElapsedTime();
-            x = (x + 20) % 320;
+            x = (x + 20) % mode.width;
             spawnOrigin.x = x;
 
             // Update
             player.updateMovement();
             bullets.updateBullets();
+
+            // FIXME
             if (spawnTime.asMilliseconds() >= 200) {
                 spawnTime = sf::Time::Zero;
                 enemies.spawnEnemy(spawnOrigin);

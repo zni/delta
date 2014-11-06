@@ -1,5 +1,5 @@
 #include <iostream>
-#include "bullet.h"
+#include "bullets.h"
 
 #define NUM_BULLETS 100
 #define SPEED -20
