@@ -80,6 +80,6 @@ void Player::updateMovement()
         this->move(SPEED, 0);
     }
     if (m_keymap[sf::Keyboard::Space]) {
-        m_bullets->fire(m_playerSprite.getPosition());
+        m_bullets->fire(m_playerSprite.getPosition(), -20);
     }
 }

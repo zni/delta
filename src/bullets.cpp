@@ -2,7 +2,6 @@
 #include "bullets.h"
 
 #define NUM_BULLETS 100
-#define SPEED -20
 
 Bullets::Bullets() :
     m_bulletSheet(),
@@ -16,7 +15,8 @@ Bullets::Bullets() :
             m_bullets[i] = new Bullet;
             m_bullets[i]->sprite.setTexture(m_bulletSheet);
             m_bullets[i]->sprite.setTextureRect(rect);
-            m_bullets[i]->state = dead;
+            m_bullets[i]->state = Bullet::dead;
+            m_bullets[i]->speed = 0;
         }
     }
 }
@@ -29,14 +29,13 @@ Bullets::~Bullets()
     }
 }
 
-void Bullets::fire(const sf::Vector2f &origin)
+void Bullets::fire(const sf::Vector2f &origin, const float &speed)
 {
     for (Bullet *bullet : m_bullets) {
-        if (bullet->state == fired) {
-            continue;
-        } else {
-            bullet->state = fired;
+        if (bullet->state != Bullet::fired) {
+            bullet->state = Bullet::fired;
             bullet->sprite.setPosition(origin);
+            bullet->speed = speed;
             break;
         }
     }
@@ -45,7 +44,7 @@ void Bullets::fire(const sf::Vector2f &origin)
 void Bullets::renderBullets(sf::RenderWindow &window)
 {
     for (Bullet *bullet : m_bullets) {
-        if (bullet->state != dead) {
+        if (bullet->state != Bullet::dead) {
             window.draw(bullet->sprite);
         }
     }
@@ -55,11 +54,11 @@ void Bullets::updateBullets()
 {
     for (Bullet *bullet : m_bullets) {
         if ((bullet->sprite.getPosition()).y < 0) {
-            bullet->state = dead;
+            bullet->state = Bullet::dead;
         }
 
-        if (bullet->state != dead) {
-            bullet->sprite.move(0, SPEED);
+        if (bullet->state != Bullet::dead) {
+            bullet->sprite.move(0, bullet->speed);
         }
     }
 }

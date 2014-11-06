@@ -1,7 +1,7 @@
 #include <iostream>
 #include "enemies.h"
 
-#define ENEMIES 200
+#define ENEMIES 20
 
 Enemies::Enemies(const sf::Vector2u &bounds) :
     m_bounds(),

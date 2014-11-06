@@ -5,14 +5,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-enum State {
-    fired,
-    dead
-};
-
 struct Bullet {
+    enum State {
+        fired,
+        dead
+    };
+
     State state;
     sf::Sprite sprite;
+    float speed;
 };
 
 class Bullets {
@@ -21,7 +22,7 @@ class Bullets {
         Bullets();
         ~Bullets();
 
-        void fire(const sf::Vector2f &origin);
+        void fire(const sf::Vector2f &origin, const float &speed);
         void renderBullets(sf::RenderWindow &window);
         void updateBullets();
 
