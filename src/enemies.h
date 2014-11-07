@@ -8,6 +8,7 @@
 struct Enemy {
     enum State { live, dead };
     State state;
+    sf::FloatRect aabb;
     sf::Sprite sprite;
     float speed;
 };

@@ -17,6 +17,19 @@ Bullets::Bullets() :
             m_bullets[i]->sprite.setTextureRect(rect);
             m_bullets[i]->state = Bullet::dead;
             m_bullets[i]->speed = 0;
+
+            // aabb
+            sf::FloatRect bounds = m_bullets[i]->sprite.getGlobalBounds();
+            sf::Vector2f size(bounds.width, bounds.height);
+            m_bullets[i]->aabb = bounds;
+
+
+            // XXX debug aabb
+            m_bullets[i]->debugAABB.setFillColor(sf::Color::Transparent);
+            m_bullets[i]->debugAABB.setOutlineColor(sf::Color::Yellow);
+            m_bullets[i]->debugAABB.setOutlineThickness(1.0);
+            m_bullets[i]->debugAABB.setSize(size);
+            m_bullets[i]->debugAABB.setPosition(m_bullets[i]->sprite.getPosition());
         }
     }
 }
@@ -36,6 +49,10 @@ void Bullets::fire(const sf::Vector2f &origin, const float &speed)
             bullet->state = Bullet::fired;
             bullet->sprite.setPosition(origin);
             bullet->speed = speed;
+
+            // XXX debug aabb
+            bullet->debugAABB.setPosition(origin);
+            bullet->aabb = bullet->sprite.getGlobalBounds();
             break;
         }
     }
@@ -46,6 +63,7 @@ void Bullets::renderBullets(sf::RenderWindow &window)
     for (Bullet *bullet : m_bullets) {
         if (bullet->state != Bullet::dead) {
             window.draw(bullet->sprite);
+            window.draw(bullet->debugAABB);
         }
     }
 }
@@ -59,6 +77,8 @@ void Bullets::updateBullets()
 
         if (bullet->state != Bullet::dead) {
             bullet->sprite.move(0, bullet->speed);
+            bullet->debugAABB.move(0, bullet->speed);
+            bullet->aabb = bullet->sprite.getGlobalBounds();
         }
     }
 }

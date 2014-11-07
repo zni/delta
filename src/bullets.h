@@ -12,7 +12,9 @@ struct Bullet {
     };
 
     State state;
+    sf::FloatRect aabb;
     sf::Sprite sprite;
+    sf::RectangleShape debugAABB;
     float speed;
 };
 
