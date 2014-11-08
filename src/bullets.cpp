@@ -51,14 +51,17 @@ void Bullets::fire(const sf::Vector2f &origin, const float &speed)
             bullet->speed = speed;
 
             // XXX debug aabb
+#if DEBUG
             bullet->debugAABB.setPosition(origin);
+#endif
             bullet->aabb = bullet->sprite.getGlobalBounds();
             break;
         }
     }
 }
 
-void Bullets::renderBullets(sf::RenderWindow &window)
+/*
+inline void Bullets::renderBullets(sf::RenderWindow &window)
 {
     for (Bullet *bullet : m_bullets) {
         if (bullet->state != Bullet::dead) {
@@ -68,7 +71,7 @@ void Bullets::renderBullets(sf::RenderWindow &window)
     }
 }
 
-void Bullets::updateBullets()
+inline void Bullets::updateBullets()
 {
     for (Bullet *bullet : m_bullets) {
         if ((bullet->sprite.getPosition()).y < 0) {
@@ -82,3 +85,4 @@ void Bullets::updateBullets()
         }
     }
 }
+*/
