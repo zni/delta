@@ -1,7 +1,7 @@
 #include <iostream>
 #include "player.h"
 
-#define SPEED 8
+#define SPEED 10
 
 Player::Player(const std::string &image, Bullets *bullets) :
     m_playerSprite(),
