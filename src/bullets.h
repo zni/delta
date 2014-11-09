@@ -8,11 +8,7 @@
 #define DEBUG 1
 
 struct Bullet {
-    enum State {
-        fired,
-        dead
-    };
-
+    enum State { fired, dead };
     State state;
     sf::FloatRect aabb;
     sf::Sprite sprite;
@@ -25,6 +21,9 @@ class Bullets {
 
         Bullets();
         ~Bullets();
+
+        // XXX
+        std::vector<Bullet*>* bullets();
 
         void fire(const sf::Vector2f &origin, const float &speed);
 

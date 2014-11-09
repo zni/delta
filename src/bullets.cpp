@@ -42,6 +42,12 @@ Bullets::~Bullets()
     }
 }
 
+// XXX
+std::vector<Bullet*>* Bullets::bullets()
+{
+    return &m_bullets;
+}
+
 void Bullets::fire(const sf::Vector2f &origin, const float &speed)
 {
     for (Bullet *bullet : m_bullets) {

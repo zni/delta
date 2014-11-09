@@ -19,6 +19,8 @@ class Enemies {
         Enemies(const sf::Vector2u &bounds);
         ~Enemies();
 
+        std::vector<Enemy*>* enemies();
+
         void renderEnemies(sf::RenderWindow &window);
         void spawnEnemy(const sf::Vector3f &origin);
         void updateEnemies();

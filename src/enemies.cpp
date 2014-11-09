@@ -47,6 +47,11 @@ Enemies::~Enemies()
     }
 }
 
+std::vector<Enemy*>* Enemies::enemies()
+{
+    return &m_enemies;
+}
+
 void Enemies::renderEnemies(sf::RenderWindow &window)
 {
     for (Enemy *enemy : m_enemies) {

@@ -10,6 +10,25 @@
 #include "bullets.h"
 #include "enemies.h"
 
+// FIXME this is temporary. STOP procrastinating.
+void checkCollisions(std::vector<Enemy*> *enemies, std::vector<Bullet*> *bullets)
+{
+    for (Enemy *enemy : *enemies) {
+        if (enemy->state == Enemy::dead) {
+            continue;
+        }
+
+        for (Bullet *bullet : *bullets) {
+            if (bullet->state == Bullet::fired) {
+                if (bullet->aabb.intersects(enemy->aabb)) {
+                    bullet->state = Bullet::dead;
+                    enemy->state = Enemy::dead;
+                }
+            }
+        }
+    }
+}
+
 int main()
 {
     std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
@@ -22,10 +41,9 @@ int main()
     player.setPosition(160, 220);
     window.setKeyRepeatEnabled(false);
 
-    sf::Vector3f spawnOrigin(160, 0, 9);
+    sf::Vector3f spawnOrigin(60, 0, 5);
     sf::Time spawnTime;
     sf::Clock clock;
-    int x = 0;
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -33,7 +51,7 @@ int main()
                 window.close();
             if (event.type == sf::Event::KeyPressed) {
 
-                // FIXME
+                // FIXME need a way out
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 } else {
@@ -46,21 +64,27 @@ int main()
 
         if (clock.getElapsedTime().asMilliseconds() >= 16) {
             spawnTime += clock.getElapsedTime();
-            x = (x + 20) % mode.width;
-            spawnOrigin.x = x;
 
             // Update
             player.updateMovement();
             bullets.updateBullets();
 
-            // FIXME
-            if (spawnTime.asMilliseconds() >= 200) {
+            // FIXME debug spawner
+            if (spawnTime.asSeconds() >= 2) {
                 spawnTime = sf::Time::Zero;
+                spawnOrigin.x = 60;
+                enemies.spawnEnemy(spawnOrigin);
+                spawnOrigin.x = 260;
+                enemies.spawnEnemy(spawnOrigin);
+                spawnOrigin.x = 460;
                 enemies.spawnEnemy(spawnOrigin);
                 enemies.updateEnemies();
             } else {
                 enemies.updateEnemies();
             }
+
+            // FIXME check collisions
+            checkCollisions(enemies.enemies(), bullets.bullets());
 
             // Render
             window.clear();
